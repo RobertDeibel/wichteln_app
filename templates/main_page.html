@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+        <title>Wichteln</title>
+    </head>
+
+    <script>
+        var check_inputs = function(){
+            var name = document.getElementById("name");
+            var email = document.getElementById("email");
+
+            if((name.value == "") || (email.value == "")) {
+                alert("Felder ausfuellen.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <body>
+        <nav class="navbar navbar-inverse">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Wichteln</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('logout') }}">Log out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('login') }}">Log in</a></li>
+        {% endif %}
+    </ul>
+          </div>
+        </nav>
+
+        <div class="container">
+                <div class="row">
+                    Trage unten Namen und Email ein um ein kleiner Weihnachtswichtel zu sein.
+                </div>
+                <div class='row'>
+                    Bisherige Teilnehmer:
+                </div>
+            {% for wicht in wichtel %}
+                <div class="row">
+                    {{ wicht.name }}
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <form action="." method="POST" onsubmit="check_inputs()">
+                    <input id="name" type="text" class="form-control" name="name" placeholder="Name"></input>
+                    <input id="email" type="text" class='form-control' name='email' placeholder='Email'></input>
+                    <input type="submit" class="btn btn-success" value="Wichteln Yeah!">
+                </form>
+            </div>
+
+        </div>
+
+    </body>
+</html>
+
+
